@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private Button registerMaxNumberButton;
     private Button nextNumberButton;
     private TextView currentNumberTextView;
+    private TextView historyTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         registerMaxNumberButton = findViewById(R.id.register_max_number);
         nextNumberButton = findViewById(R.id.next_number);
         currentNumberTextView = findViewById(R.id.current_number);
+        historyTextView = findViewById(R.id.history);
 
         maxNumberEditText.setText("" + maxNumber);
 
@@ -37,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String maxNumberString = maxNumberEditText.getText().toString();
                 maxNumber = Integer.valueOf(maxNumberString);
-
-                ///Log.d("MainActivity", "maxNumber: " + maxNumber);
             }
         });
 
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         //int count = 0;
 
         while (history.contains("" + nextNumber)) {
-            Log.d("MainActivity", "重複したので再生成");
             nextNumber = createRandomNumber();
 //            count++;
 //            if (count == maxNumber) {
@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
         String nextNumberStr = "" + nextNumber;
         currentNumberTextView.setText(nextNumberStr);
         history.add(nextNumberStr);
-        Log.d("MainActivity", history.toString());
+
+        historyTextView.setText(history.toString());
     }
 
     private int createRandomNumber() {
