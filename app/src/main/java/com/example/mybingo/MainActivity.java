@@ -9,9 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private int maxNumber = 75;
+    private ArrayList<String> history = new ArrayList<>();
     private EditText maxNumberEditText;
     private Button registerMaxNumberButton;
     private Button nextNumberButton;
@@ -48,9 +51,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickNextNumber() {
+        int nextNumber = createRandomNumber();
+        //int count = 0;
+
+        while (history.contains("" + nextNumber)) {
+            Log.d("MainActivity", "重複したので再生成");
+            nextNumber = createRandomNumber();
+//            count++;
+//            if (count == maxNumber) {
+//                break;
+//            }
+        }
+
+        String nextNumberStr = "" + nextNumber;
+        currentNumberTextView.setText(nextNumberStr);
+        history.add(nextNumberStr);
+        Log.d("MainActivity", history.toString());
+    }
+
+    private int createRandomNumber() {
         double randomNumber = Math.random() * (maxNumber - 1);
-        int nextNumber = (int) randomNumber + 1;
-        currentNumberTextView.setText("" + nextNumber);
-        //Log.d("MainActivity", "nextNumber: " + nextNumber);
+        return  (int) randomNumber + 1;
     }
 }
